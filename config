@@ -1,0 +1,70 @@
+#!/bin/bash
+
+#replacing oracle jdk with openjdk + openjfx
+apt remove oracle*
+apt install openjdk-8-jre
+apt install openjfx
+apt autoremove
+
+#rotate screen 180 degrees
+echo "lcd_rotate=2" >> /boot/config.txt
+
+#create launch script
+
+echo "#!/bin/bash
+xset s 0 0
+xset -dpms
+
+DISPLAY=:0.0 /usr/bin/java -jar -Dcom.sun.javafx.virtualKeyboard=javafx /home/pi/JavaApplications/DigitalizedExerciseBoard.jar
+shutdown
+exit 0" > /home/pi/JavaApplications/launch
+chmod +x /home/pi/JavaApplications/launch
+
+
+#create autostart link
+echo "[Desktop Entry]
+Type=Application
+Name=Exerciseboard
+Exec=/home/pi/JavaApplications/launch" > /etc/xdg/autostart/Exerciseboard.desktop
+
+#activate hw-clock
+echo "dtoverlay=i2c-rtc, ds3231" >> /boot/config.txt
+
+echo '
+#!/bin/sh
+# Reset the System Clock to UTC if the hardware clock from which it
+# was copied by the kernel was in localtime.
+
+dev=$1
+
+#if [ -e /run/systemd/system ] ; then
+#    exit 0
+#fi
+
+if [ -e /run/udev/hwclock-set ]; then
+    exit 0
+fi
+
+if [ -f /etc/default/rcS ] ; then
+    . /etc/default/rcS
+fi
+
+# These defaults are user-overridable in /etc/default/hwclock
+BADYEAR=no
+HWCLOCKACCESS=yes
+HWCLOCKPARS=
+HCTOSYS_DEVICE=rtc0
+if [ -f /etc/default/hwclock ] ; then
+    . /etc/default/hwclock
+fi
+
+if [ yes = "$BADYEAR" ] ; then
+    /sbin/hwclock --rtc=$dev --systz --badyear
+    /sbin/hwclock --rtc=$dev --hctosys --badyear
+else
+    /sbin/hwclock --rtc=$dev --systz
+    /sbin/hwclock --rtc=$dev --hctosys
+fi
+
+# Note 'touch' may not be available in initramfs
+> /run/udev/hwclock-set' > /lib/udev/hwclock-set
