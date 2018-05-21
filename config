@@ -1,4 +1,7 @@
 #!/bin/bash
+# run this this shell script once to configures
+#the Raspberry Pi to run the exercise board software correctly
+
 
 #replacing oracle jdk with openjdk + openjfx
 apt remove oracle*
