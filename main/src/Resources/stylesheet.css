@@ -1,0 +1,52 @@
+.ProgressIndicator .percentage{
+    -fx-fill: null;
+}
+
+
+.scroll-pane {
+    -fx-background-color: black;
+    -fx-border-color: white;
+}
+
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    /*-fx-border-color: black;*/
+    /*-fx-background-color: white;*/
+    -fx-background-radius: 0.2em;  
+}
+
+.IandD-button:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color; 
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+    -fx-background-radius: 0.2em 
+}
+
+#welcome-text {
+   -fx-font-size: 24px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-stroke: white;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+/*
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+
+.scroll-pane .increment-button, 
+.scroll-pane .decrement-button {
+    -fx-background-color: Gainsboro;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: Gainsboro;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}*/
+
+/* Lägg till hoovering text över inaktiverad knapp om det finns tid */
+
